@@ -1,6 +1,6 @@
 ﻿// Copyright(c) 2009 Masato MIYATA
 // Released under the MIT license
-// https://opensource.org/licenses/mit-license.php
+// https://github.com/MasatoMiyata/graph_digitizer/blob/master/LICENSE
 
 using System;
 using System.Collections.Generic;
