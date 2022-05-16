@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<title>機器特性曲線デジタイザ マニュアル</title>
+<style>
+/* Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
+
+@import url("//fonts.googleapis.com/css?family=Noto+Sans:300,600italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700");
+@import url(https://cdn.jsdelivr.net/gh/asciidoctor/asciidoctor@2.0/data/stylesheets/asciidoctor-default.css); /* Default asciidoc style framework - important */
+
+/* CUSTOMISATIONS */
+/* Change the values in root for quick customisation. If you want even more fine grain... venture further. */
+
+:root{
+--maincolor:#FFFFFF;
+--primarycolor:#2c3e50;
+--secondarycolor:#ba3925;
+--tertiarycolor: #186d7a;
+--sidebarbackground:#CCC;
+--linkcolor:#b71c1c;
+--linkcoloralternate:#f44336;
+--white:#FFFFFF;
+--black:#000000;
+}
+
+/* Text styles */
+h1{color:var(--primarycolor) !important;}
+h2,h3,h4,h5,h6{color:var(--secondarycolor) !important;}
+.title{color:var(--tertiarycolor) !important; font-family:"Noto Sans",sans-serif !important;font-style: normal !important; font-weight: normal !important;}
+p{font-family: "Noto Sans",sans-serif !important}
+
+/* Table styles */
+th{font-family: "Noto Sans",sans-serif !important}
+
+/* Responsiveness fixes */
+video {
+  max-width: 100%;
+}
+
+@media all and (max-width: 600px) {
+table {
+  width: 55vw!important;
+  font-size: 3vw;
+}
+
+.title {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body class="book toc2 toc-left">
+<div id="header">
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel0">
+<li><a href="#_機器特性曲線デジタイザ_マニュアル">機器特性曲線デジタイザ マニュアル</a>
+<ul class="sectlevel1">
+<li><a href="#_はじめに">1. はじめに</a>
+<ul class="sectlevel2">
+<li><a href="#_ツールの機能">1.1. ツールの機能</a></li>
+<li><a href="#_免責事項">1.2. 免責事項</a></li>
+<li><a href="#_開発者">1.3. 開発者</a></li>
+<li><a href="#_ライセンス">1.4. ライセンス</a></li>
+</ul>
+</li>
+<li><a href="#_動作環境">2. 動作環境</a>
+<ul class="sectlevel2">
+<li><a href="#_net_framework_3_5_のインストール">2.1. NET Framework 3.5 のインストール</a></li>
+<li><a href="#_警告が表示される場合">2.2. 警告が表示される場合</a></li>
+</ul>
+</li>
+<li><a href="#_ツールの使い方">3. ツールの使い方</a>
+<ul class="sectlevel2">
+<li><a href="#_ツールの起動と特性曲線図の読み込み">3.1. ツールの起動と特性曲線図の読み込み</a></li>
+<li><a href="#_図の調整拡大縮小移動回転">3.2. 図の調整（拡大・縮小、移動、回転）</a></li>
+<li><a href="#_軸の設定">3.3. 軸の設定</a></li>
+<li><a href="#_曲線の読み取り">3.4. 曲線の読み取り</a></li>
+<li><a href="#_他の曲線の読み取り">3.5. 他の曲線の読み取り</a></li>
+<li><a href="#_読み取った値の保存">3.6. 読み取った値の保存</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<style>
+  .imageblock > .title {
+    text-align: inherit;
+  }
+</style>
+</div>
+</div>
+<h1 id="_機器特性曲線デジタイザ_マニュアル" class="sect0"><a class="link" href="#_機器特性曲線デジタイザ_マニュアル">機器特性曲線デジタイザ マニュアル</a></h1>
+<div class="sect1">
+<h2 id="_はじめに"><a class="link" href="#_はじめに">1. はじめに</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>「機器特性曲線デジタイザ」は、機器メーカーより紙で提供される特性曲線をパソコン上で読み取ってデジタル化するためのツールです。</p>
+</div>
+<div class="paragraph">
+<p>　建築物のエネルギーシミュレーションを実施する場合において、空調システムにおける熱源機器（チラーやボイラ）、ポンプ、ファンの特性曲線を読み取って各機器のモデルパラメータを同定する際に使用することを想定して開発されました。通常、機器の特性曲線はグラフで提供されるため、モデルパラメータを同定する際には手作業で曲線上の値を読み取るという煩雑な作業が発生します。本ツールを用いれば、パソコン上で特性曲線を効率よく読み取ることができます。ポンプの特性曲線のように、1つのx軸（流量）に対して、y軸に複数の項目（揚程、効率、軸動力）が設定されている場合において、効率良く特性曲線を読み取ることができるように工夫がなされています。</p>
+</div>
+<div id="interface" class="imageblock text-center">
+<div class="content">
+<img src="./figure1.jpg" alt="figure1" width="600">
+</div>
+<div class="title">図 1. インターフェイス</div>
+</div>
+<div class="sect2">
+<h3 id="_ツールの機能"><a class="link" href="#_ツールの機能">1.1. ツールの機能</a></h3>
+<div class="paragraph">
+<p>　本ツールは次の機能を有しています。</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>デジタル化した特性曲線図（jpegファイル）を読み込んでモニタ上に表示する。</p>
+</li>
+<li>
+<p>読み込んだ図面を調整（拡大・縮小、移動、回転）する。</p>
+</li>
+<li>
+<p>マウスを使って曲線上の値を読み取り、デジタル化する。</p>
+</li>
+<li>
+<p>読み取った値をcsvファイルとして保存する。</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_免責事項"><a class="link" href="#_免責事項">1.2. 免責事項</a></h3>
+<div class="paragraph">
+<p>本ツールの利用によってユーザーまたは第三者が損害をうけた場合にも、開発者は損害賠償責任を負いません。</p>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="_開発者"><a class="link" href="#_開発者">1.3. 開発者</a></h3>
+<div class="paragraph">
+<p>開発担当者：宮田 征門<br>
+開発協力者：吉田 治典、王 福林、小野 永吉、張 兆明</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ライセンス"><a class="link" href="#_ライセンス">1.4. ライセンス</a></h3>
+<div class="paragraph">
+<p>This software is released under the MIT License.<br>
+<a href="https://github.com/MasatoMiyata/graph_digitizer/blob/master/LICENSE" class="bare">https://github.com/MasatoMiyata/graph_digitizer/blob/master/LICENSE</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_動作環境"><a class="link" href="#_動作環境">2. 動作環境</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>　本ツールの利用には、.NET Framework 3.5 がインストールされた Windows 10 が必要です。.NET Framework 4系（4.7や4.8等）では動作しませんのでご注意下さい。</p>
+</div>
+<div class="sect2">
+<h3 id="_net_framework_3_5_のインストール"><a class="link" href="#_net_framework_3_5_のインストール">2.1. NET Framework 3.5 のインストール</a></h3>
+<div class="paragraph">
+<p>　実行ファイル(graph_digitizer.exe)をダブルクリックした際、.NET Framework 3.5 がインストールされていない場合は、<a href="#framework_install1">図 2</a>のような画面が表示されます。</p>
+</div>
+<div id="framework_install1" class="imageblock text-center">
+<div class="content">
+<img src="framework_install1.png" alt="framework_install1" width="400">
+</div>
+<div class="title">図 2. .NET Framework 3.5のインストールを促す画面</div>
+</div>
+<div class="paragraph">
+<p>　<a href="#framework_install1">図 2</a>における「この機能をダウンロードしてインストールする」をクリックすると、自動的にインストールが始まります。
+インストールが完了すると、<a href="#framework_install2">図 3</a> に示す画面が表示されます。</p>
+</div>
+<div id="framework_install2" class="imageblock text-center">
+<div class="content">
+<img src="framework_install2.png" alt="framework_install2" width="400">
+</div>
+<div class="title">図 3. .NET Framework 3.5のインストール完了</div>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="_警告が表示される場合"><a class="link" href="#_警告が表示される場合">2.2. 警告が表示される場合</a></h3>
+<div class="paragraph">
+<p>　実行ファイル(graph_digitizer.exe)をダブルクリックした際に、<a href="#warning">図 4</a> のような警告が表示される場合があります。
+<a href="#warning">図 4</a> の画面に表示される「アプリ」の名称が「graph_digitizer.exe」であることを確認のうえ「実行」をクリックしてください。</p>
+</div>
+<div id="warning" class="imageblock text-center">
+<div class="content">
+<img src="warning.png" alt="framework_install2" width="400">
+</div>
+<div class="title">図 4. 警告の表示</div>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_ツールの使い方"><a class="link" href="#_ツールの使い方">3. ツールの使い方</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_ツールの起動と特性曲線図の読み込み"><a class="link" href="#_ツールの起動と特性曲線図の読み込み">3.1. ツールの起動と特性曲線図の読み込み</a></h3>
+<div class="paragraph">
+<p>　実行ファイル(graph_digitizer.exe)をダブルクリックすると <a href="#Figure02">図 5</a> に示す画面が表示されます。これが本ツールのインターフェイスです。</p>
+</div>
+<div id="Figure02" class="imageblock text-center">
+<div class="content">
+<img src="figure2.png" alt="figure2" width="600">
+</div>
+<div class="title">図 5. 機器特性曲線デジタル化ツールのインターフェイス</div>
+</div>
+<div class="paragraph">
+<p>　インターフェイスの上部にツールバーがあり、このツールバー上に操作に必要なボタンが並んでいます。
+まずはツールバー上の「開く」ボタンを押し、特性曲線の画像ファイル（jpegファイル）を読み込んでください。
+ <a href="#Figure02">図 5</a> は画像ファイルを読み込んだ後の画面です。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_図の調整拡大縮小移動回転"><a class="link" href="#_図の調整拡大縮小移動回転">3.2. 図の調整（拡大・縮小、移動、回転）</a></h3>
+<div class="paragraph">
+<p>　ツールバーの「拡大」ボタン、「縮小」ボタン、「回転」ボタンを押すことで、図の調整ができます。
+また、図をドラッグすることで表示範囲の変更が可能です。
+曲線を読み取りやすいように、適宜図の大きさ・位置を調整してください。
+図の調整が終わったら「画像を固定」ボタンを押して下さい。</p>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="_軸の設定"><a class="link" href="#_軸の設定">3.3. 軸の設定</a></h3>
+<div class="paragraph">
+<p>　「画像を固定」ボタンを押すと、自動的に軸の設定に移ります。
+表示される指示に従い、X軸（横軸）、Y軸（縦軸）の設定を行ってください。
+各軸の名称、軸上の2点の位置（マウスでクリックして指定します）とその点の値を入力します（ <a href="#Figure03">図 6</a> 、 <a href="#Figure04">図 7</a> ）。</p>
+</div>
+<div id="Figure03" class="imageblock text-center">
+<div class="content">
+<img src="figure3.jpg" alt="figure3" width="600">
+</div>
+<div class="title">図 6. 軸の名称を入力する画面</div>
+</div>
+<div id="Figure04" class="imageblock text-center">
+<div class="content">
+<img src="figure4.jpg" alt="figure4" width="600">
+</div>
+<div class="title">図 7. 軸上の一点をクリックし、その値を入力</div>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="_曲線の読み取り"><a class="link" href="#_曲線の読み取り">3.4. 曲線の読み取り</a></h3>
+<div class="paragraph">
+<p>　軸の設定が終わると「曲線上の値をクリックしてください」と表示されますので、
+設定した軸に対応する曲線上を複数点クリックしてください（ <a href="#Figure05">図 8</a> ）。
+クリックした点の値が右側のメッセージボックスに表示されます。<br>
+　読み取りが終われば、「読み取り終了」ボタンを押してください。</p>
+</div>
+<div id="Figure05" class="imageblock text-center">
+<div class="content">
+<img src="figure5.png" alt="figure5" width="600">
+</div>
+<div class="title">図 8. 曲線の読み取り</div>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="_他の曲線の読み取り"><a class="link" href="#_他の曲線の読み取り">3.5. 他の曲線の読み取り</a></h3>
+<div class="paragraph">
+<p>　例えば、ポンプの特性曲線のY軸は「全揚程」「効率」「軸動力」「電流」と4種類の情報を表しています（ <a href="#Figure06">図 9</a> を参照）。
+このような複数のY軸（縦軸）を持つ特性曲線についても効率よくデジタル化できるように、X軸の設定は引き継ぎ、
+Y軸のみを新たに設定して、異なるY軸の曲線を継続して読み取る機能を本ツールは持っています。</p>
+</div>
+<div class="paragraph">
+<p>　「読み取り終了」ボタンを押した後、「さらに読み取りを行いますか」と表示されますので（ <a href="#Figure06">図 9</a> ）、
+異なる縦軸の値を継続して読み取りたい場合は、「はい」を選択してください。この場合は、3.3、3.4の作業を繰り返すことになります。</p>
+</div>
+<div class="paragraph">
+<p>　また、例えば冷凍機の特性曲線において、運転効率の曲線が冷却水温度ごとに複数本描かれている場合がありますが、
+これらの曲線を連続して読み取る場合はY軸を再設定する必要はありません（全ての曲線でY軸は共通であるため）。
+このような曲線を読み取る場合を想定して、X軸、Y軸ともに設定を引き継ぎ、連続して複数の曲線を読み取る機能も本ツールは持っています。
+本ツールでは、何本の曲線でも連続して読み取ることが可能です。</p>
+</div>
+<div id="Figure06" class="imageblock text-center">
+<div class="content">
+<img src="figure6.jpg" alt="figure6" width="600">
+</div>
+<div class="title">図 9. 他の曲線も連続して読み取りを行うかを入力</div>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="_読み取った値の保存"><a class="link" href="#_読み取った値の保存">3.6. 読み取った値の保存</a></h3>
+<div class="paragraph">
+<p>　「保存」ボタンを押すと、読み取った値がcsvファイルに保存されます（ <a href="#Figure07">図 10</a> ）。</p>
+</div>
+<div id="Figure07" class="imageblock text-center">
+<div class="content">
+<img src="figure7.png" alt="figure7" width="600">
+</div>
+<div class="title">図 10. 読み取った値を保存したcsvファイル</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2022-05-16 17:14:38 +0900
+</div>
+</div>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  messageStyle: "none",
+  tex2jax: {
+    inlineMath: [["\\(", "\\)"]],
+    displayMath: [["\\[", "\\]"]],
+    ignoreClass: "nostem|nolatexmath"
+  },
+  asciimath2jax: {
+    delimiters: [["\\$", "\\$"]],
+    ignoreClass: "nostem|noasciimath"
+  },
+  TeX: { equationNumbers: { autoNumber: "none" } }
+})
+MathJax.Hub.Register.StartupHook("AsciiMath Jax Ready", function () {
+  MathJax.InputJax.AsciiMath.postfilterHooks.Add(function (data, node) {
+    if ((node = data.script.parentNode) && (node = node.parentNode) && node.classList.contains('stemblock')) {
+      data.math.root.display = "block"
+    }
+    return data
+  })
+})
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_HTMLorMML"></script>
+</body>
+</html>
