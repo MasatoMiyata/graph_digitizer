@@ -8,12 +8,12 @@
 - ポンプの特性曲線のように、1つのx軸（流量）に対して、y軸に複数の項目（揚程、効率、軸動力）が設定されている場合において、効率良く特性曲線を読み取ることができるように工夫がなされています。
 
 <p align="center">
-<img src="doc/figure.jpg" width="600">
+<img src="docs/figure1.jpg" width="600">
 </p>
 
 ### 動作環境
 - Windows 10
-- .NET Framework 3.5 のインストールが必要です。
+- .NET Framework 3.5 のインストールが必要です。 詳細は [マニュアル](https://masatomiyata.github.io/graph_digitizer/manual.html) をご覧下さい。
 
 ### 本ツールの機能
 
@@ -25,7 +25,7 @@
 ### 本ツールの使い方
 
 - graph_digitizer.exe をクリックすると起動します。
-- 詳細な使い方は [マニュアル](doc/graph_digitizer_user_manual.pdf) をご覧下さい。
+- 詳細な使い方は [マニュアル](https://masatomiyata.github.io/graph_digitizer/manual.html) をご覧下さい。
 
 
 ### 免責事項
